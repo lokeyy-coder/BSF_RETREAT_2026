@@ -1,0 +1,696 @@
+// ==============================================================
+// BSF LEADERS RETREAT 2026 — Sacred Editorial Theme
+// "Illuminated manuscript meets modern editorial design"
+//
+// Quarto SCSS structure:
+//   /*-- scss:defaults --*/  Bootstrap variable overrides (compiled before Bootstrap)
+//   /*-- scss:rules --*/     CSS rules (compiled after Bootstrap)
+//
+// Fonts (loaded via _quarto.yml include-in-header):
+//   Cormorant Garamond — display/headings (high-contrast elegant serif)
+//   EB Garamond        — body text (matches mainfont setting)
+//   Cinzel             — UI chrome, navbar (small-caps, tracked)
+// ==============================================================
+
+
+/*-- scss:defaults --*/
+
+// ──────────────────────────────────────────────────────────────
+// TYPOGRAPHY
+// Quarto/Bootstrap SCSS variables — applied before compilation.
+// $font-size-root controls rem base; $headings-* set heading
+// defaults throughout Bootstrap components.
+// ──────────────────────────────────────────────────────────────
+$font-family-sans-serif:  "EB Garamond", Georgia, "Times New Roman", serif;
+$font-family-base:        "EB Garamond", Georgia, "Times New Roman", serif;
+$headings-font-family:    "Cormorant Garamond", Georgia, "Times New Roman", serif;
+$headings-font-weight:    600;
+$headings-line-height:    1.15;
+$headings-letter-spacing: -0.02em;
+$font-size-root:          18px;
+$font-size-base:          1rem;
+$line-height-base:        1.8;
+
+// ──────────────────────────────────────────────────────────────
+// PALETTE — Light mode
+// Overrides Bootstrap's default color tokens. These become
+// $primary, $body-bg, etc. throughout the Bootstrap system.
+// ──────────────────────────────────────────────────────────────
+$body-bg:           #f5f0e8;   // parchment
+$body-color:        #1a1a2e;   // deep navy
+$link-color:        #6b2d3e;   // burgundy
+$link-hover-color:  #4a1f2b;
+$link-decoration:   none;
+$link-hover-decoration: none;
+$headings-color:    #6b2d3e;   // burgundy
+$primary:           #6b2d3e;
+$secondary:         #c9a84c;   // gold
+
+// ──────────────────────────────────────────────────────────────
+// NAVBAR — Quarto-specific Bootstrap extensions
+// $navbar-bg / $navbar-fg / $navbar-hl are Quarto variables
+// that map to Bootstrap's navbar color tokens.
+// ──────────────────────────────────────────────────────────────
+$navbar-bg:         #faf7f2;   // lightest parchment surface
+$navbar-fg:         #1a1a2e;
+$navbar-hl:         #6b2d3e;
+$navbar-padding-y:  0.7rem;
+
+// ──────────────────────────────────────────────────────────────
+// MISC BOOTSTRAP TOKENS
+// ──────────────────────────────────────────────────────────────
+$code-bg:           #f0ebe0;
+$code-color:        #6b2d3e;
+$border-color:      rgba(201, 168, 76, 0.4);
+$border-radius:     4px;
+$border-radius-lg:  8px;
+$input-focus-box-shadow: 0 0 0 3px rgba(107, 45, 62, 0.15);
+
+
+/*-- scss:rules --*/
+
+// ──────────────────────────────────────────────────────────────
+// CSS CUSTOM PROPERTY TOKENS
+// Semantic layer above Bootstrap vars — used throughout rules.
+// Declared on :root for light mode; overridden in .quarto-dark.
+// ──────────────────────────────────────────────────────────────
+:root {
+  --color-bg:            #f5f0e8;
+  --color-surface:       #faf7f2;
+  --color-surface-alt:   #f0ebe0;
+  --color-primary:       #6b2d3e;
+  --color-primary-hover: #4a1f2b;
+  --color-gold:          #c9a84c;
+  --color-gold-muted:    rgba(201, 168, 76, 0.4);
+  --color-text:          #1a1a2e;
+  --color-text-muted:    #5a5a6e;
+
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body:    "EB Garamond", Georgia, serif;
+  --font-ui:      "Cinzel", Georgia, serif;
+
+  // Closeread custom properties set here as a base, but note:
+  // the cr-style YAML block injects an inline <style> in the HTML
+  // head that also sets these on :root and will win the cascade.
+  // We override the visual result by targeting the actual DOM
+  // elements directly below (higher specificity wins).
+  --cr-section-background-color:          #f5f0e8;
+  --cr-narrative-background-color-overlay: rgba(245, 240, 232, 0.92);
+  --cr-narrative-text-color-overlay:      #6b2d3e;
+  --cr-narrative-font-family:             "Cormorant Garamond", Georgia, serif;
+  --cr-narrative-font-size:               1.9em;
+  --cr-narrative-border-radius:           4px;
+  --cr-narrative-overlay-max-width:       700px;
+}
+
+
+// ──────────────────────────────────────────────────────────────
+// DARK MODE TOKENS
+// Quarto adds .quarto-dark to <body> when dark scheme active.
+// This remaps all tokens to the candlelit-vellum palette:
+// warm near-black bg, cream text, gold as the primary accent.
+// ──────────────────────────────────────────────────────────────
+body.quarto-dark {
+  --color-bg:            #1a1612;
+  --color-surface:       #22201a;
+  --color-surface-alt:   #2a2720;
+  --color-primary:       #c9a84c;    // gold becomes primary in dark
+  --color-primary-hover: #dbb85c;
+  --color-gold:          #c9a84c;
+  --color-gold-muted:    rgba(201, 168, 76, 0.3);
+  --color-text:          #e8dcc8;    // warm cream
+  --color-text-muted:    #a09070;
+
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+
+// ──────────────────────────────────────────────────────────────
+// GLOBAL BASE
+// ──────────────────────────────────────────────────────────────
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: rgba(201, 168, 76, 0.3);
+  color: var(--color-text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+body.quarto-dark ::selection {
+  background-color: rgba(201, 168, 76, 0.25);
+}
+
+
+// ──────────────────────────────────────────────────────────────
+// TYPOGRAPHY
+// Fluid type scale via clamp(). Headings feel like hand-lettered
+// chapter titles — generous line-height, tight letter-spacing.
+// ──────────────────────────────────────────────────────────────
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-primary);
+}
+
+h1, .h1 { font-size: clamp(2rem,   5vw,   3.5rem); }
+h2, .h2 { font-size: clamp(1.6rem, 4vw,   2.5rem); }
+h3, .h3 { font-size: clamp(1.3rem, 3vw,   1.9rem); }
+h4, .h4 { font-size: clamp(1.1rem, 2.5vw, 1.5rem); }
+
+p {
+  line-height: 1.8;
+  margin-bottom: 1.2em;
+}
+
+body.quarto-dark {
+  h1, h2, h3, h4, h5, h6,
+  .h1, .h2, .h3, .h4, .h5, .h6 {
+    color: var(--color-gold);
+  }
+}
+
+
+// ──────────────────────────────────────────────────────────────
+// LINKS
+// Gold underline slides in from left via background-size trick.
+// Excludes nav and button elements that have their own styles.
+// ──────────────────────────────────────────────────────────────
+a:not(.navbar-brand):not(.nav-link):not(.btn):not(.quarto-color-scheme-toggle) {
+  color: var(--color-primary);
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, var(--color-gold));
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s ease, color 0.2s ease;
+
+  &:hover, &:focus {
+    color: var(--color-primary-hover);
+    background-size: 100% 1px;
+  }
+}
+
+body.quarto-dark a:not(.navbar-brand):not(.nav-link):not(.btn):not(.quarto-color-scheme-toggle) {
+  color: var(--color-gold);
+
+  &:hover, &:focus {
+    color: var(--color-primary-hover);
+  }
+}
+
+
+// ──────────────────────────────────────────────────────────────
+// NAVBAR
+// The Quarto template sets data-bs-theme="dark" on the <nav>
+// element even in light mode (a theme-pairing artifact from
+// cosmo+superhero). We override all colors with !important so
+// Bootstrap's dark-variant tokens don't bleed through.
+//
+// Headroom adds .headroom--not-top on scroll — we use that to
+// add a warm drop shadow without it showing at the top of page.
+// ──────────────────────────────────────────────────────────────
+nav.navbar {
+  background-color: var(--color-surface) !important;
+  border-bottom: 1px solid var(--color-gold-muted) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: box-shadow 0.35s ease, background-color 0.3s ease;
+
+  &.headroom--not-top {
+    box-shadow: 0 2px 20px rgba(26, 18, 10, 0.1), 0 1px 4px rgba(26, 18, 10, 0.06);
+  }
+
+  // Site title — Cinzel small-caps, tracked
+  .navbar-brand,
+  .navbar-title {
+    font-family: var(--font-ui) !important;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-primary) !important;
+  }
+
+  // Nav links — Cinzel, tightly tracked
+  .nav-link,
+  .navbar-nav .nav-link {
+    font-family: var(--font-ui) !important;
+    font-size: 0.73rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text) !important;
+    padding: 0.5rem 1.1rem;
+    position: relative;
+    transition: color 0.2s ease;
+
+    // Gold accent underline that grows on hover/active
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background-color: var(--color-gold);
+      border-radius: 1px;
+      transition: width 0.25s ease;
+    }
+
+    &:hover {
+      color: var(--color-primary) !important;
+      &::after { width: 50%; }
+    }
+
+    &.active {
+      color: var(--color-primary) !important;
+      font-weight: 600;
+      &::after { width: 50%; }
+    }
+  }
+
+  // Dark/light toggle icon
+  .quarto-color-scheme-toggle {
+    color: var(--color-text-muted) !important;
+    transition: color 0.2s ease;
+    &:hover { color: var(--color-gold) !important; }
+  }
+}
+
+body.quarto-dark nav.navbar {
+  background-color: var(--color-surface) !important;
+  border-bottom-color: var(--color-gold-muted) !important;
+  box-shadow: 0 1px 0 rgba(201, 168, 76, 0.15);
+
+  .navbar-brand,
+  .navbar-title {
+    color: var(--color-gold) !important;
+  }
+
+  .nav-link,
+  .navbar-nav .nav-link {
+    color: var(--color-text) !important;
+
+    &:hover, &.active {
+      color: var(--color-gold) !important;
+    }
+  }
+
+  .quarto-color-scheme-toggle {
+    color: var(--color-text-muted) !important;
+    &:hover { color: var(--color-gold) !important; }
+  }
+}
+
+
+// ──────────────────────────────────────────────────────────────
+// PAGE BACKGROUND & CONTENT AREAS
+// ──────────────────────────────────────────────────────────────
+#quarto-content {
+  background-color: var(--color-bg);
+}
+
+main.content {
+  background-color: var(--color-bg);
+}
+
+
+// ──────────────────────────────────────────────────────────────
+// CLOSEREAD — HOMEPAGE (index.qmd)
+//
+// IMPORTANT SPECIFICITY NOTE:
+// The cr-style YAML block in index.qmd injects an inline <style>
+// tag in the <head> that sets :root custom properties. That tag
+// appears AFTER our compiled stylesheet in the HTML document, so
+// it wins the :root cascade. To override, we target the actual
+// DOM elements directly — element selectors have higher
+// specificity than :root and win regardless of source order.
+// ──────────────────────────────────────────────────────────────
+.cr-section {
+  // Direct background override — beats the :root var
+  background-color: var(--color-bg) !important;
+
+  // Sticky column (the full-bleed background images)
+  // Warm vignette overlay via ::after — darkened corners give
+  // depth and ensure the narrative text remains legible.
+  .sticky-col {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      background: radial-gradient(
+        ellipse at center,
+        transparent 40%,
+        rgba(26, 18, 10, 0.42) 100%
+      );
+    }
+  }
+
+  // Narrative column sits above the vignette
+  .narrative-col {
+    z-index: 3;
+
+    // The overlay panel — parchment with blur.
+    // We set color/background/font-family/etc. directly here
+    // so they override the cr-style inline vars.
+    .narrative {
+      background-color: rgba(245, 240, 232, 0.93) !important;
+      color: #6b2d3e !important;
+      font-family: "Cormorant Garamond", Georgia, serif !important;
+      font-size: 1.9em !important;
+      line-height: 1.55;
+      border-radius: 4px !important;
+      border-left: 3px solid #c9a84c;
+      box-shadow:
+        0 4px 24px rgba(107, 45, 62, 0.1),
+        0 1px 6px rgba(107, 45, 62, 0.06);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 1em 1.35em !important;
+    }
+  }
+}
+
+body.quarto-dark .cr-section {
+  background-color: var(--color-bg) !important;
+
+  .narrative-col .narrative {
+    background-color: rgba(26, 22, 18, 0.94) !important;
+    color: #e8dcc8 !important;
+    border-left-color: #c9a84c;
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.45);
+  }
+}
+
+
+// ──────────────────────────────────────────────────────────────
+// INFO PAGE — Content layout
+// Quarto renders info.qmd with .page-layout-article on
+// #quarto-content. We constrain the reading column width and
+// apply generous vertical rhythm.
+// ──────────────────────────────────────────────────────────────
+.page-layout-article main.content {
+  max-width: 760px;
+  margin-inline: auto;
+  padding-block: clamp(2rem, 5vw, 4rem);
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+// Page title block (Quarto inserts this from YAML front matter)
+.quarto-title-block {
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--color-gold-muted);
+  padding-bottom: 1.5rem;
+
+  .quarto-title h1.title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: var(--color-primary);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    position: relative;
+    padding-bottom: 0.6em;
+
+    // Decorative gold rule — 40px wide, below title text
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background-color: var(--color-gold);
+      border-radius: 1px;
+    }
+  }
+}
+
+body.quarto-dark .quarto-title-block .quarto-title h1.title {
+  color: var(--color-gold);
+}
+
+
+// ──────────────────────────────────────────────────────────────
+// INFO PAGE — Section headings (level1 h1s)
+// Each section h1 gets a 40px gold underline via ::after.
+// ──────────────────────────────────────────────────────────────
+section.level1 > h1 {
+  font-family: var(--font-display);
+  color: var(--color-primary);
+  position: relative;
+  padding-bottom: 0.55em;
+  margin-bottom: 1.2rem;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background-color: var(--color-gold);
+    border-radius: 1px;
+  }
+}
+
+body.quarto-dark section.level1 > h1 {
+  color: var(--color-gold);
+}
+
+
+// ──────────────────────────────────────────────────────────────
+// INFO PAGE — "Manuscript marginalia" callout
+// The #under-construction section is styled as an illuminated
+// manuscript aside: parchment bg, gold left-border, italic serif.
+// ──────────────────────────────────────────────────────────────
+section#under-construction {
+  background-color: var(--color-surface);
+  border-left: 4px solid var(--color-gold);
+  border-radius: 0 6px 6px 0;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2.5rem;
+  font-style: italic;
+
+  // The warning emoji heading — shrink it a bit inside the box
+  > h1 {
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.75rem;
+
+    // Hide the generic gold rule — the border-left is the accent here
+    &::after { display: none; }
+  }
+
+  p {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    line-height: 1.75;
+    margin-bottom: 0.7em;
+    font-style: italic;
+
+    &:last-of-type { margin-bottom: 0; }
+  }
+}
+
+body.quarto-dark section#under-construction {
+  background-color: var(--color-surface);
+  border-left-color: var(--color-gold);
+
+  p { color: var(--color-text-muted); }
+}
+
+
+// ──────────────────────────────────────────────────────────────
+// INFO PAGE — YouTube embed
+// Quarto shortcodes render as .quarto-video.ratio.ratio-16x9
+// We add rounded corners, a gold top-border, and a warm shadow.
+// ──────────────────────────────────────────────────────────────
+.quarto-video.ratio {
+  border-radius: 12px;
+  overflow: hidden;
+  border-top: 3px solid var(--color-gold);
+  box-shadow:
+    0 8px 32px rgba(107, 45, 62, 0.12),
+    0 2px 8px rgba(107, 45, 62, 0.06);
+  margin-block: 1.75rem;
+}
+
+body.quarto-dark .quarto-video.ratio {
+  border-top-color: var(--color-gold);
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.5),
+    0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+
+// ──────────────────────────────────────────────────────────────
+// DROP CAPS
+// First-letter of the first paragraph in info page sections.
+// Cormorant Garamond, 3.5em, burgundy, with a small gold
+// border-right that echoes the heading rule motif.
+// Excluded from .cr-section (scrollytelling context).
+// ──────────────────────────────────────────────────────────────
+section.level1:not(#under-construction) > p:first-of-type::first-letter {
+  font-family: var(--font-display);
+  font-size: 3.5em;
+  font-weight: 700;
+  color: var(--color-primary);
+  float: left;
+  line-height: 0.82;
+  margin: 0.04em 0.1em 0 0;
+  padding-right: 0.07em;
+  border-right: 2px solid var(--color-gold);
+}
+
+body.quarto-dark section.level1:not(#under-construction) > p:first-of-type::first-letter {
+  color: var(--color-gold);
+  border-right-color: rgba(201, 168, 76, 0.5);
+}
+
+
+// ──────────────────────────────────────────────────────────────
+// HORIZONTAL RULES / GOLD DIVIDERS
+// Gradient that fades from transparent at edges to gold center.
+// ──────────────────────────────────────────────────────────────
+hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-gold-muted) 20%,
+    var(--color-gold) 50%,
+    var(--color-gold-muted) 80%,
+    transparent
+  );
+  margin: 2.5rem 0;
+  opacity: 0.8;
+}
+
+body.quarto-dark hr {
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(201, 168, 76, 0.2) 20%,
+    rgba(201, 168, 76, 0.5) 50%,
+    rgba(201, 168, 76, 0.2) 80%,
+    transparent
+  );
+}
+
+
+// ──────────────────────────────────────────────────────────────
+// FOOTER
+// Gold border-top, parchment surface, and a very low-opacity
+// SVG cross watermark as a repeating background pattern.
+// ──────────────────────────────────────────────────────────────
+#quarto-footer,
+.nav-footer {
+  position: relative;
+  background-color: var(--color-surface) !important;
+  border-top: 1px solid var(--color-gold-muted);
+  padding-block: 1.5rem;
+  overflow: hidden;
+
+  // SVG cross/fleur watermark — 6% opacity, purely decorative
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23c9a84c' stroke-width='1.2' stroke-linecap='round'%3E%3Cline x1='30' y1='8' x2='30' y2='52'/%3E%3Cline x1='8' y1='30' x2='52' y2='30'/%3E%3Ccircle cx='30' cy='30' r='3.5'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: repeat;
+    opacity: 0.06;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  > * { position: relative; z-index: 1; }
+}
+
+body.quarto-dark {
+  #quarto-footer,
+  .nav-footer {
+    background-color: var(--color-surface) !important;
+    border-top-color: var(--color-gold-muted);
+  }
+}
+
+
+// ──────────────────────────────────────────────────────────────
+// QUARTO STANDARD CALLOUTS
+// Style any .callout elements with the parchment + gold-left
+// "manuscript marginalia" treatment.
+// ──────────────────────────────────────────────────────────────
+.callout {
+  border-left-color: var(--color-gold) !important;
+  background-color: var(--color-surface);
+  border-radius: 0 6px 6px 0;
+  font-family: var(--font-body);
+  font-style: italic;
+}
+
+body.quarto-dark .callout {
+  background-color: var(--color-surface);
+  border-left-color: var(--color-gold) !important;
+}
+
+
+// ──────────────────────────────────────────────────────────────
+// RESPONSIVE ADJUSTMENTS
+// ──────────────────────────────────────────────────────────────
+@media (max-width: 768px) {
+  h1, .h1 { font-size: clamp(1.5rem, 6vw, 2rem); }
+
+  .cr-section .narrative-col .narrative {
+    font-size: 1.4em !important;
+    padding: 0.75em 1em !important;
+    border-left-width: 2px;
+  }
+
+  section.level1:not(#under-construction) > p:first-of-type::first-letter {
+    font-size: 2.5em;
+  }
+
+  section#under-construction {
+    padding: 1rem 1.25rem;
+  }
+
+  .quarto-title-block .quarto-title h1.title {
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .cr-section .narrative-col .narrative {
+    font-size: 1.2em !important;
+  }
+
+  .quarto-video.ratio {
+    border-radius: 8px;
+  }
+}
